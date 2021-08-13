@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Table(name="`user`")
  * @ApiResource(
  *              itemOperations={"GET", "DELETE"},
- *              collectionOperations={"GET"},
+ *              collectionOperations={"GET", "POST"},
  *              normalizationContext={ 
  *                           "groups"={"read"} 
  *              }
