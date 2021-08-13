@@ -2,11 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Post;
 use App\Entity\User;
 use Faker\Factory;
+
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -23,6 +25,7 @@ class AppFixtures extends Fixture
     {
         $this->userLoad( $manager );
         $this->postLoad( $manager );
+        $this->commentLoad( $manager );
 
     }
 
@@ -54,9 +57,30 @@ class AppFixtures extends Fixture
                 $post->setPublished(new \DateTime());
 
                 $user = $this->getReference("user_admin_".rand(0, 16));
+
                 $post->setAuthor( $user);
 
+                $this->addReference("post_".$i, $post);
+
                 $manager->persist($post);
+        }
+         $manager->flush();   
+    }
+
+    public function commentLoad(ObjectManager $manager){
+
+        for($i=0; $i < 777; $i++){
+                $comment = new Comment();
+                $comment->setContent($this->faker->realText());
+                $comment->setPublished(new \DateTime());
+
+                $user = $this->getReference("user_admin_".rand(0, 16));
+                $post = $this->getReference("post_".rand(0, 76));
+
+                $comment->setAuthor( $user);
+                $comment->setPost($post);
+
+                $manager->persist($comment);
         }
          $manager->flush();   
     }
