@@ -9,15 +9,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ApiResource(
- *              itemOperations={"GET"},
+ *              itemOperations={"GET", "DELETE"},
  *              collectionOperations={"GET"},
- *             
+ *              normalizationContext={ 
+ *                           "groups"={"read"} 
+ *              }
  * )
  */
 class User implements UserInterface
@@ -26,11 +29,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
      /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $username;
 
@@ -46,6 +51,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $email;
 
