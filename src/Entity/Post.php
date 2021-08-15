@@ -6,12 +6,21 @@ use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      itemOperations={"GET"},
+ *      collectionOperations={"GET"},
+ *      normalizationContext={ 
+ *                          "groups"={"show"}
+ *     }
+ * 
+ * )
  */
 class Post
 {
@@ -19,6 +28,7 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"show"})
      */
     private $id;
 
@@ -28,22 +38,27 @@ class Post
     }
       /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"show"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank( )
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"show"})
      */
     private $published;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"show"})
+     * @Assert\NotBlank( )
      */
     private $author;
 

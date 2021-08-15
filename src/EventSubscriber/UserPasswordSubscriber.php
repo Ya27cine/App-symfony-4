@@ -23,14 +23,14 @@ class UserPasswordSubscriber implements EventSubscriberInterface
 
     public function cyrptPassword(ViewEvent $event)
     {
-        $entity = $event->getControllerResult();
+        $obj_entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if($entity instanceof User && $method == Request::METHOD_POST){
+        if($obj_entity instanceof User && $method == Request::METHOD_POST){
 
-            $crypt_pass = $this->passwordEncoder->encodePassword( $entity, $entity->getPassword());
+            $crypt_pass = $this->passwordEncoder->encodePassword( $obj_entity, $obj_entity->getPassword());
 
-            $entity->setPassword(  $crypt_pass  );
+            $obj_entity->setPassword(  $crypt_pass  );
         }
     }
 

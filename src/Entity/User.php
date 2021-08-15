@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 /**
@@ -23,6 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              }
  * )
  */
+
 class User implements UserInterface
 {
     /**
@@ -36,6 +39,8 @@ class User implements UserInterface
      /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
+     * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
+     * @Assert\Length(min=4)
      */
     private $username;
 
@@ -46,12 +51,15 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
+     * @Assert\NotBlank(message="l'email est obligatoire.")
+     * @Assert\Email()
      */
     private $email;
 

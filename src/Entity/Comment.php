@@ -4,12 +4,21 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
- * @ApiResource()
+* @ApiResource(
+ *      itemOperations={"GET", "DELETE"},
+ *      collectionOperations={"GET"},
+ *      normalizationContext={ 
+ *                          "groups"={"show"}
+ *     }
+ * 
+ * )
  */
 class Comment
 {
@@ -22,6 +31,7 @@ class Comment
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $content;
 
@@ -33,6 +43,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\NotBlank()
      */
     private $author;
 
