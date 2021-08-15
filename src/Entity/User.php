@@ -41,6 +41,7 @@ class User implements UserInterface
      * @Groups({"read"})
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      * @Assert\Length(min=4)
+     * @Assert\Regex(pattern="/^[a-z]+$/i", message="this field is not respect pattern")
      */
     private $username;
 
