@@ -51,6 +51,16 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Expression(
+     *      "this.getPassword() == this.getRetypedPassword()"
+     * )
+     */
+    private $retypedPassword;
+
+
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      */
@@ -107,6 +117,18 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getRetypedPassword(): ?string
+    {
+        return $this->retypedPassword;
+    }
+
+    public function setRetypedPassword(string $password): self
+    {
+        $this->retypedPassword = $password;
 
         return $this;
     }
