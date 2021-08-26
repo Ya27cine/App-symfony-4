@@ -15,7 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
  *      itemOperations={"GET"},
- *      collectionOperations={"GET"},
+ *      collectionOperations={
+ *                          "GET", 
+ *                          "POST"={ "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"}
+ *      },
  *      normalizationContext={ 
  *                          "groups"={"show"}
  *     }
@@ -39,18 +42,21 @@ class Post
       /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"show"})
+     * @Assert\Length(min=10)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank( )
+     * @Assert\Length(min=15)
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"show"})
+     * @Assert\DateTime()
      */
     private $published;
 
@@ -58,7 +64,6 @@ class Post
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"show"})
-     * @Assert\NotBlank( )
      */
     private $author;
 
