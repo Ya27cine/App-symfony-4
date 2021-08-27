@@ -18,18 +18,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ApiResource(
  *              itemOperations={
  *                              "GET" = { "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *                                         "normalization-context" ={ "groups"={"get"}   }
+ *                                         "normalization_context" ={ "groups"={"get"}   }
  *                              },"DELETE",
  *                              "PUT"={
- *                                       "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object.getAuthor() == user ",
- *                                        "denormalization-context" ={ "groups"={"put"} }
+ *                                       "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object == user ",
+ *                                        "denormalization_context" ={ "groups"={"put"} }, "normalization_context" ={ "groups"={"get"}}
  *                              }
  *              },
- *              collectionOperations={"GET", 
- *                                      "POST" = { "denormalization-context" = { "groups"={"post"} }
+ *              collectionOperations={
+ *                                      "GET", 
+ *                                      "POST" = { 
+ *                                                "denormalization_context" = { "groups"={"post"}}, "normalization_context" ={ "groups"={"get"}}
+ *                                       }
  *              }
  * )
- * 
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  *
@@ -43,7 +45,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get", "post"})
+     * @Groups({"get"})
      */
     private $id;
 
@@ -58,6 +60,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"post", "put"})
      */
     private $password;
 
@@ -66,6 +69,7 @@ class User implements UserInterface
      * @Assert\Expression(
      *      "this.getPassword() == this.getRetypedPassword()"
      * )
+     * @Groups({"post", "put"})
      */
     private $retypedPassword;
 
@@ -73,7 +77,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get", "post"})
+     * @Groups({"get", "post", "put"})
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      */
     private $name;
