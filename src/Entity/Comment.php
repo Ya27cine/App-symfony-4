@@ -4,19 +4,29 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
 * @ApiResource(
- *      itemOperations={"GET", "DELETE"},
- *      collectionOperations={"GET"},
- *      normalizationContext={ 
- *                          "groups"={"show"}
- *     }
+ *    itemOperations={"GET", "DELETE",
+ *                      "PUT" = { "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object.getAuthor() == user "}
+ *      },
+ *      collectionOperations={
+ *                          "GET", 
+ *                          "POST"={ "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"}
+ *      },
+ *      subresourceOperations={
+ *          "api_posts_comments_get_subresource" ={
+ *                                          "normalization_context"={ 
+ *                                                  "groups"={"get-comment-with-author"}
+ *                                              }
+ *          }
+ *       }
  * 
  * )
  */
@@ -32,18 +42,20 @@ class Comment
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Groups({"get-comment-with-author"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"get-comment-with-author"})
      */
     private $published;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=true)
-     * @Assert\NotBlank()
+     * @Groups({"get-comment-with-author"})
      */
     private $author;
 

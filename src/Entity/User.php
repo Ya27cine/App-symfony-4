@@ -51,7 +51,7 @@ class User implements UserInterface
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get", "post"})
+     * @Groups({"get", "post", "get-comment-with-author"})
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      * @Assert\Length(min=4)
      * @Assert\Regex(pattern="/^[a-z]+$/i", message="this field is not respect pattern")
@@ -77,7 +77,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get", "post", "put"})
+     * @Groups({"get", "post", "put", "get-comment-with-author"})
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      */
     private $name;

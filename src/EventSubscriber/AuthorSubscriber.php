@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\Comment;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
@@ -22,7 +23,7 @@ class AuthorSubscriber implements EventSubscriberInterface
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if($entity instanceof Post && $method == Request::METHOD_POST) {
+        if( ($entity instanceof Comment || $entity instanceof Post)  &&  $method == Request::METHOD_POST ) {
             
             $author = $this->myToken->getToken()->getUser();
             $entity->setAuthor($author);

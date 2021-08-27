@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -24,7 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      normalizationContext={ 
  *                          "groups"={"show"}
  *     }
- * 
  * )
  */
 class Post
@@ -73,6 +74,7 @@ class Post
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
      * @ORM\JoinColumn(nullable=true)
+     * @ApiSubresource()
      */
     private $comments;
 
