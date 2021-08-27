@@ -17,12 +17,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ApiResource(
  *              itemOperations={
- *                              "GET" = { "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"}, 
- *                              "DELETE"
+ *                              "GET" = { "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *                                         "normalization-context" ={ "groups"={"get"}   }
+ *                              },"DELETE",
+ *                              "PUT"={
+ *                                       "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object.getAuthor() == user ",
+ *                                        "denormalization-context" ={ "groups"={"put"} }
+ *                              }
  *              },
- *              collectionOperations={"GET", "POST"},
- *              normalizationContext={ 
- *                           "groups"={"read"} 
+ *              collectionOperations={"GET", 
+ *                                      "POST" = { "denormalization-context" = { "groups"={"post"} }
  *              }
  * )
  * 
@@ -39,13 +43,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read"})
+     * @Groups({"get", "post"})
      */
     private $id;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"get", "post"})
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      * @Assert\Length(min=4)
      * @Assert\Regex(pattern="/^[a-z]+$/i", message="this field is not respect pattern")
@@ -69,13 +73,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get", "post"})
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"post"})
      * @Assert\NotBlank(message="l'email est obligatoire.")
      * @Assert\Email()
      */
@@ -84,7 +89,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author")
-     * @Groups({"read"})
+     * @Groups({"get"})
      */
     private $posts;
 
