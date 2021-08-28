@@ -45,13 +45,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get"})
+     * @Groups({"get", "get-post-with-author"})
      */
     private $id;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get", "post", "get-comment-with-author"})
+     * @Groups({"get", "post", "get-comment-with-author", "get-post-with-author"})
      * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
      * @Assert\Length(min=4)
      * @Assert\Regex(pattern="/^[a-z]+$/i", message="this field is not respect pattern")
@@ -84,7 +84,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"post"})
+     * @Groups({"post", "get-post-with-author"})
      * @Assert\NotBlank(message="l'email est obligatoire.")
      * @Assert\Email()
      */

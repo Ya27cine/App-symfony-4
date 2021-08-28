@@ -16,7 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
- *      itemOperations={"GET", "DELETE",
+ *      itemOperations={"GET"={
+ *                          "normalization_context"={"groups"={"get-post-with-author"}}
+ *                      }, 
+ *                      "DELETE",
  *                      "PUT" = { "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object.getAuthor() == user "}
  *      },
  *      collectionOperations={
@@ -34,7 +37,7 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"show"})
+     * @Groups({"get-post-with-author"})
      */
     private $id;
 
@@ -53,6 +56,7 @@ class Post
      * @ORM\Column(type="text")
      * @Assert\NotBlank( )
      * @Assert\Length(min=15)
+     * @Groups({"get-post-with-author"})
      */
     private $content;
 
@@ -60,13 +64,14 @@ class Post
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"show"})
      * @Assert\DateTime()
+     * @Groups({"get-post-with-author"})
      */
     private $published;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"show"})
+     * @Groups({"get-post-with-author"})
      */
     private $author;
 
@@ -75,6 +80,7 @@ class Post
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
      * @ORM\JoinColumn(nullable=true)
      * @ApiSubresource()
+     * @Groups({"get-post-with-author"})
      */
     private $comments;
 
