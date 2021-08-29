@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                          "normalization_context"={"groups"={"get-post-with-author"}}
  *                      }, 
  *                      "DELETE",
- *                      "PUT" = { "access_control" = " is_granted('ROLE_EDITTOR') or ( is_granted('ROLE_WRITTER') and  object.getAuthor() == user ) "}
+ *                      "PUT" = { "access_control" = " is_granted('ROLE_EDITOR') or ( is_granted('ROLE_WRITTER') and  object.getAuthor() == user ) "}
  *      },
  *      collectionOperations={
  *                          "GET", 
