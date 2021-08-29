@@ -31,13 +31,16 @@ class AppFixtures extends Fixture
 
     public function userLoad(ObjectManager $manager){
 
+        $myroles =[
+            User::ROLE_COMMENTATOR, User::ROLE_SUPERADMIN, User::ROLE_ADMIN, User::ROLE_EDITOR, User::ROLE_WRITTER,
+        ];
         for($i=0; $i < 17; $i++){
                 $user = new User();
                 $user->setUsername($this->faker->userName);
                 $user->setPassword( $this->userPasswordEncoderInterface->encodePassword($user, "0000") );
                 $user->setName($this->faker->name);
                 $user->setEmail($this->faker->email);
-
+                $user->setRoles( [ $myroles[ rand(0,4) ] ] );
                 $this->addReference("user_admin_".$i, $user);
 
                 $manager->persist($user);

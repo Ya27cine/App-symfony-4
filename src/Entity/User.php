@@ -42,6 +42,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class User implements UserInterface
 {
+    const DEFAULT_ROLES      = [self::ROLE_COMMENTATOR];
+
+    const ROLE_COMMENTATOR  = "ROLE_COMMENTATOR";
+    const ROLE_WRITTER      = "ROLE_WRITTER";
+    const ROLE_ADMIN        = "ROLE_ADMIN";
+    const ROLE_EDITOR       = "ROLE_EDITOR";
+    const ROLE_SUPERADMIN   = "ROLE_SUPERADMIN";
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -103,10 +112,18 @@ class User implements UserInterface
      */
     private $comments;
 
+
+    /**
+     * @ORM\Column(type="simple_array", length=200, nullable=true)
+     */
+    private $roles;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+
+        $this->roles = self::DEFAULT_ROLES;
     }
 
 
@@ -240,7 +257,11 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles) {
+        $this->roles = $roles;
     }
   
     /**
