@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Swoole\Mmap;
 
+use App\Controller\ResetPasswordAction;
 
 /**
  * @ApiResource(
@@ -28,11 +29,11 @@ use Swoole\Mmap;
  *                                        "denormalization_context" ={ "groups"={"put"} }, "normalization_context" ={ "groups"={"get"} }
  *                              },
  *                              "put-reset-password" = {
- *                                  access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object == user ",
+ *                                  "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object == user ",
  *                                  "method" = "PUT",
  *                                  "path" = "/users/{id}/reset-password",
  *                                  "controller" = ResetPasswordAction::class,
- *                                  "denormalization_context" ={ "groups"={"put-reset-password"} },                                                               
+ *                                  "denormalization_context" ={ "groups"={"put-reset-password"}  },                                                               
  *                              }
  *              },
  *              collectionOperations={
@@ -72,9 +73,9 @@ class User implements UserInterface
      /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get", "post", "get-comment-with-author", "get-post-with-author"})
-     * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
+     * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.", groups={"post"})
      * @Assert\Length(min=4)
-     * @Assert\Regex(pattern="/^[a-z]+$/i", message="this field is not respect pattern")
+     * @Assert\Regex(pattern="/^[a-z]+$/i", message="this field is not respect pattern", groups={"post"})
      */
     private $username;
 
@@ -85,9 +86,10 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"post"})
      * @Assert\Expression(
-     *      "this.getPassword() == this.getRetypedPassword()"
+     *      "this.getPassword() == this.getRetypedPassword()",
+     *      groups={"post"}
      * )
      * @Groups({"post"})
      */
@@ -105,7 +107,7 @@ class User implements UserInterface
     /**
      * @Assert\NotBlank()
      * @Assert\Expression(
-     *      "this.getNewPassword() == this.getNewRetypedPassword()"
+     *      "this.getNewPassword() == this.getNewRetypedPassword()",     
      * )
      * @Groups({"put-reset-password"})
      */
@@ -122,14 +124,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get", "post", "put", "get-comment-with-author"})
-     * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.")
+     * @Groups({"get","put", "post", "get-comment-with-author"})
+     * @Assert\NotBlank(message="le nom d'utilisateur est obligatoire.", groups={"post"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"post", "get-post-with-author"})
+     * @Groups({"post", "put","get-post-with-author"})
      * @Assert\NotBlank(message="l'email est obligatoire.")
      * @Assert\Email()
      */
