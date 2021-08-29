@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *              itemOperations={
  *                              "GET" = { "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *                                         "normalization_context" ={ "groups"={"get"}   }
- *                              },"DELETE",
+ *                              },"DELETE" = { "access_control" = " is_granted('ROLE_SUPERADMIN') },
  *                              "PUT"={
  *                                       "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object == user ",
  *                                        "denormalization_context" ={ "groups"={"put"} }, "normalization_context" ={ "groups"={"get"}}

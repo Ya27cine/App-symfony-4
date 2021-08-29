@@ -14,11 +14,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=CommentRepository::class)
 * @ApiResource(
  *    itemOperations={"GET", "DELETE",
- *                      "PUT" = { "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object.getAuthor() == user "}
+ *                      "PUT" = { "access_control" = " is_granted('ROLE_EDITTOR') or (is_granted('ROLE_COMMENTATOR') and  object.getAuthor() == user) "}
  *      },
  *      collectionOperations={
  *                          "GET", 
- *                          "POST"={ "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"}
+ *                          "POST"={ "access_control" = "is_granted('ROLE_COMMENTATOR')"}
  *      },
  *      subresourceOperations={
  *          "api_posts_comments_get_subresource" ={
