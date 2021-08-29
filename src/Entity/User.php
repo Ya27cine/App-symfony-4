@@ -26,6 +26,13 @@ use Swoole\Mmap;
  *                              "PUT"={
  *                                       "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object == user ",
  *                                        "denormalization_context" ={ "groups"={"put"} }, "normalization_context" ={ "groups"={"get"} }
+ *                              },
+ *                              "put-reset-password" = {
+ *                                  access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and  object == user ",
+ *                                  "method" = "PUT",
+ *                                  "path" = "/users/{id}/reset-password",
+ *                                  "controller" = ResetPasswordAction::class,
+ *                                  "denormalization_context" ={ "groups"={"put-reset-password"} },                                                               
  *                              }
  *              },
  *              collectionOperations={
@@ -100,14 +107,14 @@ class User implements UserInterface
      * @Assert\Expression(
      *      "this.getNewPassword() == this.getNewRetypedPassword()"
      * )
-     * @Groups({""})
+     * @Groups({"put-reset-password"})
      */
     private $newRetypedPassword;
 
     /**
      * @Assert\NotBlank()
      * @UserPassword()
-     * @Groups({""})
+     * @Groups({"put-reset-password"})
      */
     private $oldPassword;
 
