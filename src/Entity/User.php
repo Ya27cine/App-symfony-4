@@ -12,6 +12,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Swoole\Mmap;
 
 
 /**
@@ -71,7 +73,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"post", "put"})
+     * @Groups({"post"})
      */
     private $password;
 
@@ -80,9 +82,34 @@ class User implements UserInterface
      * @Assert\Expression(
      *      "this.getPassword() == this.getRetypedPassword()"
      * )
-     * @Groups({"post", "put"})
+     * @Groups({"post"})
      */
     private $retypedPassword;
+
+
+
+    //============== Attr Reset password :
+   /**
+     * @Assert\NotBlank()
+     * @Groups({"put-reset-password"})
+     */
+    private $newPassword;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Expression(
+     *      "this.getNewPassword() == this.getNewRetypedPassword()"
+     * )
+     * @Groups({""})
+     */
+    private $newRetypedPassword;
+
+    /**
+     * @Assert\NotBlank()
+     * @UserPassword()
+     * @Groups({""})
+     */
+    private $oldPassword;
 
 
 
@@ -153,6 +180,42 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getNewPassword(): ?string
+    {
+        return $this->newPassword;
+    }
+
+    public function setNewPassword(string $password): self
+    {
+        $this->newPassword = $password;
+
+        return $this;
+    }
+
+    public function getNewRetypedPassword(): ?string
+    {
+        return $this->newRetypedPassword;
+    }
+
+    public function setNewRetypedPassword(string $password): self
+    {
+        $this->newRetypedPassword = $password;
+
+        return $this;
+    }
+
+    public function getOldPassword(): ?string
+    {
+        return $this->oldPassword;
+    }
+
+    public function setOldPassword(string $password): self
+    {
+        $this->oldPassword = $password;
 
         return $this;
     }
