@@ -88,6 +88,7 @@ class Post
 
      /**
      * @ORM\Column(type="string", length=140, nullable=true)
+     * @Groups({"get-post-with-author"})
      */
     private $slug;
 

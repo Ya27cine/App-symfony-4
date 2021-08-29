@@ -28,7 +28,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *              collectionOperations={
  *                                      "GET", 
  *                                      "POST" = { 
- *                                                "denormalization_context" = { "groups"={"post"}}, "normalization_context" ={ "groups"={"get"}}
+ *                                                "denormalization_context" = { "groups"={"post"}}, 
+ *                                                "normalization_context"   = { "groups"={"get"}}
  *                                       }
  *              }
  * )
