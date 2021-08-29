@@ -46,8 +46,8 @@ class User implements UserInterface
 
     const ROLE_COMMENTATOR  = "ROLE_COMMENTATOR";
     const ROLE_WRITTER      = "ROLE_WRITTER";
-    const ROLE_ADMIN        = "ROLE_ADMIN";
     const ROLE_EDITOR       = "ROLE_EDITOR";
+    const ROLE_ADMIN        = "ROLE_ADMIN";
     const ROLE_SUPERADMIN   = "ROLE_SUPERADMIN";
 
 
