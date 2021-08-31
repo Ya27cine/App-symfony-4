@@ -2,12 +2,27 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\UploadImageAction;
+
 
 /**
+ * @ApiResource(
+ *          collectionOperations={
+ *              "get",
+ *              "post"={
+ *                  "method"= "POST",
+ *                  "path"= "/images",
+ *                  "controller" = UploadImageAction::class
+ *              }
+ *          },
+ *          itemOperations={
+ *      
+ *          }
+ * )
  * @ApiResource()
  * @ORM\Entity(repositoryClass=ImageRepository::class)
  * @Vich\Uploadable()
@@ -49,6 +64,18 @@ class Image
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }
