@@ -5,14 +5,19 @@ use Symfony\Component\Form\FormFactoryInterface;
 use App\Entity\Image;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UploadImageAction{
 
     private $formFactoryInterface;
     private $em;
-    public function __construct(FormFactoryInterface $formFactoryInterface, EntityManagerInterface $em)
+    private $validator;
+
+
+    public function __construct(FormFactoryInterface $formFactoryInterface, EntityManagerInterface $em, ValidatorInterface $validator)
     {
         $this->formFactoryInterface = $formFactoryInterface;
+        $this->validator = $validator;
         $this->em = $em;
     }
 

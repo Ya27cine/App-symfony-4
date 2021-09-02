@@ -8,6 +8,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\UploadImageAction;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 /**
  * @ApiResource(
@@ -38,6 +41,7 @@ class Image
 
     /**
      * @Vich\UploadableField(mapping="images", fileNameProperty="url")
+     * @Assert\NotNull()
      */
     private $file;
 
