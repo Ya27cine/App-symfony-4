@@ -14,19 +14,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
+ *          attributes={
+ *                  "formats" = {"json", "jsonld", "form"={"multipart/form-data"}}
+ *          },
  *          collectionOperations={
  *              "get",
  *              "post"={
  *                  "method"= "POST",
  *                  "path"= "/images",
- *                  "controller" = UploadImageAction::class
+ *                  "controller" =UploadImageAction::class,
+ *                  "defaults" = { "_api_receive"=false}
  *              }
- *          },
- *          itemOperations={
- *      
- *          }
+ *          }    
  * )
- * @ApiResource()
  * @ORM\Entity(repositoryClass=ImageRepository::class)
  * @Vich\Uploadable()
  */

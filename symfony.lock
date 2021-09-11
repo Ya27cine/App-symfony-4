@@ -355,6 +355,9 @@
     "symfony/polyfill-uuid": {
         "version": "v1.23.0"
     },
+    "symfony/process": {
+        "version": "v4.4.30"
+    },
     "symfony/property-access": {
         "version": "v4.4.27"
     },
@@ -474,6 +477,15 @@
     },
     "symfony/web-link": {
         "version": "v4.4.27"
+    },
+    "symfony/web-server-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
+        }
     },
     "symfony/yaml": {
         "version": "v4.4.29"
