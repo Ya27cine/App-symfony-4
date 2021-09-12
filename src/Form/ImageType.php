@@ -34,6 +34,11 @@ class ImageType extends AbstractType
         return  '';
     }
 
+    public function getExtendedType()
+    {
+        return FileType::class;
+    }
+
    
    
 }

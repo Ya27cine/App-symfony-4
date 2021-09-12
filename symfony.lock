@@ -1,7 +1,4 @@
 {
-    "api-platform/api-pack": {
-        "version": "v1.3.0"
-    },
     "api-platform/core": {
         "version": "2.5",
         "recipe": {
@@ -322,9 +319,6 @@
     "symfony/options-resolver": {
         "version": "v4.4.27"
     },
-    "symfony/orm-pack": {
-        "version": "v2.1.0"
-    },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.23.1"
     },
@@ -407,9 +401,6 @@
     },
     "symfony/serializer": {
         "version": "v4.4.27"
-    },
-    "symfony/serializer-pack": {
-        "version": "v1.0.4"
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"

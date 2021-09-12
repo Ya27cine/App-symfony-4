@@ -24,7 +24,7 @@ class UploadImageAction{
         $this->em = $em;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Image
     {
         $image = new Image();
 
@@ -36,6 +36,7 @@ class UploadImageAction{
             $this->em->persist( $image );
             $this->em->flush();
 
+            //var_dump("-----"+ $image->getUrl());
             $image->setFile(null);
 
             return $image;
