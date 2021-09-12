@@ -59,6 +59,7 @@ class Image
      */
     private $alt;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,6 +97,18 @@ class Image
     public function setAlt(?string $alt): self
     {
         $this->alt = $alt;
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): self
+    {
+        $this->post = $post;
 
         return $this;
     }
