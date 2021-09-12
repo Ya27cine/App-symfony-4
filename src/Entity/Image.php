@@ -10,6 +10,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\UploadImageAction;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 
 /**
@@ -20,7 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                  "formats" = {"json", "jsonld", "form"={"multipart/form-data"}}
  *          },
  *          collectionOperations={
- *              "get",
+ *              "get"={ "normalization_context"={"groups"={"get"}} 
+ *                }, 
  *              "post"={
  *                  "method"="POST",
  *                  "path"="/images",
@@ -39,6 +42,7 @@ class Image
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"get", "get-post-with-author"})
      */
     private $id;
 
@@ -51,11 +55,13 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255,  nullable=true)
+     * @Groups({"get", "get-post-with-author"})
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=120, nullable=true)
+     * @Groups({"get", "get-post-with-author"})
      */
     private $alt;
 

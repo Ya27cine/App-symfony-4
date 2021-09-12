@@ -49,7 +49,7 @@ class Post
     }
       /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups({"show"})
+     * @Groups({"show", "get-post-with-author"})
      * @Assert\Length(min=10)
      */
     private $title;
@@ -80,8 +80,8 @@ class Post
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Image")
      * @ORM\JoinTable()
-     * @Groups({"post"})
      * @ApiSubresource()
+     * @Groups({"post", "get-post-with-author"})
      */
     private $images;
 
