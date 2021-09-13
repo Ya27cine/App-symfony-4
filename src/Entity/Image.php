@@ -19,7 +19,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @Vich\Uploadable()
  * @ApiResource(
  *          attributes={
- *                  "formats" = {"json", "jsonld", "form"={"multipart/form-data"}}
+ *                  "formats" = {"json", "jsonld", "form"={"multipart/form-data"}},
+ *                  "order" = {"id": "DESC"}
  *          },
  *          collectionOperations={
  *              "get"={ "normalization_context"={"groups"={"get"}} 

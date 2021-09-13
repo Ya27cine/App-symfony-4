@@ -18,6 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
+ *      attributes={
+ *              "order" = { "id" : "DESC", "title": "ASC"}
+ *      },
  *      itemOperations={"GET"={
  *                          "normalization_context"={"groups"={"get-post-with-author"}}
  *                      }, 
