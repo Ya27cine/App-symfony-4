@@ -11,11 +11,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
+ * 
+ * @ApiFilter(SearchFilter::class, properties={
+ *      
+ *          "id": "exact",
+ *          "title": "partial",
+ *  
+ * })
+ * 
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
  *      attributes={
