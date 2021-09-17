@@ -35,7 +35,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              arguments={
  *                  "parameterName": "properties",
  *                  "overrideDefaultProperties": false,
- *                  "whitelist": {"id", "title", "author", "slug", "content"}
+ *                  "whitelist": {"id", "title", "author", "slug"}
  *              }
  * ),
  * @ApiFilter(OrderFilter::class, properties={"id", "title", "published"}),
