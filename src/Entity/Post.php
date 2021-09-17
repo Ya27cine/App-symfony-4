@@ -24,6 +24,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      
  *          "id": "exact",
  *          "title": "partial",
+ *          "content": "partial",
+ *          "author": "exact",
+ *          "author.name": "partial"
  *  
  * }),
  * @ApiFilter(OrderFilter::class, properties={"id", "title", "published"}),
