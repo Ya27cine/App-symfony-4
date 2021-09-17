@@ -13,7 +13,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
-
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
@@ -26,7 +26,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *  
  * }),
  * 
- * @ApiFilter(DateFilter::class, properties={"published"})
+ * @ApiFilter(DateFilter::class, properties={"published"}),
+ * @ApiFilter(RangeFilter::class, properties={"id"})
  * 
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
