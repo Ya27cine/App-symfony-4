@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
@@ -25,14 +26,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "title": "partial",
  *  
  * }),
- * 
+ * @ApiFilter(OrderFilter::class, properties={"id", "title", "published"}),
  * @ApiFilter(DateFilter::class, properties={"published"}),
  * @ApiFilter(RangeFilter::class, properties={"id"})
  * 
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
  *      attributes={
- *              "order" = { "id" : "DESC", "title": "ASC"}
+ *              "order" = { "author" : "DESC", "title": "ASC"}
  *      },
  *      itemOperations={"GET"={
  *                          "normalization_context"={"groups"={"get-post-with-author"}}
